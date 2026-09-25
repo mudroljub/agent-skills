@@ -1,6 +1,7 @@
 # Agent Skills
 
-Reusable skills for React UI libraries and design-system workflows.
+Reusable skills for React UI libraries and design-system workflows. The public
+repository is available at [mudroljub/agent-skills](https://github.com/mudroljub/agent-skills).
 
 ## Included skills
 
@@ -15,19 +16,32 @@ Reusable skills for React UI libraries and design-system workflows.
 
 ## Install
 
-After this repository is published on GitHub:
-
 ```bash
-npx skills add <github-owner>/agent-skills
+npx skills add mudroljub/agent-skills
 ```
 
 Start a new agent session after installation so it can discover the installed
 skills.
 
-## Repository layout
+### Install selected skills
 
-Each skill lives in `skills/<skill-name>/` and contains its required
-`SKILL.md` file plus any reusable references.
+List the skills available in this repository before installing:
+
+```bash
+npx skills add mudroljub/agent-skills --list
+```
+
+Install one skill, for example `write-tests`:
+
+```bash
+npx skills add mudroljub/agent-skills --skill write-tests
+```
+
+Install several selected skills in one command:
+
+```bash
+npx skills add mudroljub/agent-skills --skill check-design --skill sync-design-tokens
+```
 
 ## Contributing
 
