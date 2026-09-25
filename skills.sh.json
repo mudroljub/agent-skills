@@ -1,0 +1,32 @@
+{
+  "$schema": "https://skills.sh/schemas/skills.sh.schema.json",
+  "notGrouped": "bottom",
+  "groupings": [
+    {
+      "title": "Design systems",
+      "description": "Figma parity, assets, design tokens, and component references.",
+      "skills": [
+        "check-assets",
+        "check-design",
+        "sync-design-tokens",
+        "sync-reference-table"
+      ]
+    },
+    {
+      "title": "Component workflow",
+      "description": "Storybook, testing, and component review.",
+      "skills": [
+        "write-stories",
+        "write-tests",
+        "uikit-final-review"
+      ]
+    },
+    {
+      "title": "Agent behavior",
+      "description": "Interpret user intent before making changes.",
+      "skills": [
+        "pracenje-instrukcija"
+      ]
+    }
+  ]
+}
