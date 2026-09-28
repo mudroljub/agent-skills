@@ -13,6 +13,7 @@ repository is available at [mudroljub/agent-skills](https://github.com/mudroljub
 - `write-stories` — create or revise React Storybook stories and Docs.
 - `write-tests` — write behavioral React component tests.
 - `pracenje-instrukcija` — distinguish questions and discussion from explicit commands.
+- `perfect-developer` — give the agent the character of an elite software engineer.
 
 ## Install
 

@@ -23,9 +23,10 @@
     },
     {
       "title": "Agent behavior",
-      "description": "Interpret user intent before making changes.",
+      "description": "Interpret user intent and engineer with a consistent character.",
       "skills": [
-        "pracenje-instrukcija"
+        "pracenje-instrukcija",
+        "perfect-developer"
       ]
     }
   ]
