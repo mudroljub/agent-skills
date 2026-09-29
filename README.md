@@ -44,6 +44,22 @@ Install several selected skills in one command:
 npx skills add mudroljub/agent-skills --skill check-design --skill sync-design-tokens
 ```
 
+### Install globally
+
+By default, skills are installed into the current project. Add `-g` (`--global`)
+to install a skill into your user directory so it is available in every
+project, for example `perfect-developer`:
+
+```bash
+npx skills add mudroljub/agent-skills -g --skill perfect-developer
+```
+
+or without prompts:
+
+```bash
+npx skills add mudroljub/agent-skills -g -s perfect-developer -a claude-code codex -y
+```
+
 ## Contributing
 
 Keep skills project-neutral. Do not add credentials, private URLs, proprietary
