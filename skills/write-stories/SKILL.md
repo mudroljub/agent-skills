@@ -47,6 +47,10 @@ profile needs configuration.
   public API.
 - Arrange the primary variant axis in column headers and states in rows when
   that makes comparison clearer.
+- Give every column of a comparison grid the same width, sized to its widest
+  header or example, and use the smallest gap that still keeps adjacent
+  headers clearly separate. For example, use an `inline-grid` with
+  `repeat(n, 1fr)` columns instead of content-sized columns.
 - When every example varies along one shared public-prop axis, show the prop
   name once as a clear heading (for example, `State`) and label each example
   with only its value (for example, `hovered` or `disabled`). Do not repeat
