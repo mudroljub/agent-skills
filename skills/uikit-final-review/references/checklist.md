@@ -1,6 +1,8 @@
 # Final review checklist
 
-- Verify that components contain no inline styles.
+- Verify that components contain no hardcoded inline styles. A dynamic value
+  received through a prop (for example, a user-supplied color) may be passed
+  through `style`.
 
 - Verify that canonical tokens are used wherever Figma uses tokens.
 
