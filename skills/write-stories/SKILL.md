@@ -30,10 +30,13 @@ profile needs configuration.
 - Follow the project's established Docs-page convention. Use the fallback in
   the bundled conventions only when the project has no established pattern.
 - Put useful scalar public props in `args` and give them explicit controls in
-  `argTypes`; hide props that cannot be meaningfully tried from the panel.
-- Set callback, `className`, ReactNode, and slot props to `control: false`
-  when a reader cannot usefully try them, then supply their fixed composition
-  in `render`. Keep controls only for props with an observable result.
+  `argTypes`. Keep controls only for props with an observable result.
+- Hide every prop a reader cannot try from the panel, both its control and its
+  Docs table row: `{ control: false, table: { disable: true } }`. This covers
+  callbacks, refs, `className`/`style`, ReactNode and slot props, fixture
+  objects and arrays, router or store hooks, and props that change nothing
+  visible in the story. Supply their fixed values in `args` or `render`. The
+  Docs table lists only props that have a usable control.
 - Add `Examples` or `Interactive` only when it aids design or state review.
 
 ## Examples layout

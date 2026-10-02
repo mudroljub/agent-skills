@@ -13,7 +13,7 @@ convention.
   `<ComponentName>_`. When the installed Storybook version supports it, tag it
   with `!dev`; otherwise use the project's existing way to hide a Docs-only
   story.
-- Pass useful scalar public props through `args` and define their controls explicitly in `argTypes`; hide props that cannot be meaningfully tried from the panel.
+- Pass useful scalar public props through `args` and define their controls explicitly in `argTypes`. Hide every prop that cannot be meaningfully tried from the panel, including its Docs table row.
 - Keep review stories such as `Examples`, `AllVariants`, or `Interactive` only
   when useful for design or state review.
 - Do not add production component props only to reproduce design variants.
@@ -36,8 +36,9 @@ const meta = {
   tags: ['autodocs'],
   argTypes: {
     title: { control: 'text' },
-    className: { control: false },
-    children: { control: false },
+    className: { control: false, table: { disable: true } },
+    children: { control: false, table: { disable: true } },
+    onClick: { control: false, table: { disable: true } },
   },
 } satisfies Meta<typeof ComponentName>;
 
@@ -55,7 +56,7 @@ export const ComponentName_: Story = {
 ```
 
 - `args` provide the default values shown in Docs; `argTypes` define the available controls.
-- Use `control: false` for callbacks, `className`, `children` and other ReactNode/slot props when they cannot be usefully tried from the panel. Provide their fixed composition in `render`.
+- Use `{ control: false, table: { disable: true } }` for callbacks, `className`, `children` and other ReactNode/slot props, fixture objects and refs when they cannot be usefully tried from the panel. Provide their fixed composition in `args` or `render`. The Docs table shows only props with a usable control.
 - Keep a control only when a story reader can change it and observe a meaningful result. Do not expose implementation hooks such as `className` merely because Storybook inferred them.
 - Add `Examples` when a separate visual comparison of multiple design
   variants, states, or usage cases is required.

@@ -18,16 +18,19 @@ treatment; do not execute them or copy their project-specific imports.
 
 ## Props and controls
 
-Keep the Docs controls limited to props that a reader can meaningfully try and
-observe in the story:
+Keep the Docs controls and the Docs props table limited to props that a reader
+can meaningfully try and observe in the story. "Hide" below always means hiding
+both the control and the table row: `{ control: false, table: { disable: true } }`.
 
 - Keep scalar visual props such as enums, booleans, text, and relevant numbers.
 - Hide `children` when the story supplies fixture content or a composed slot.
 - Hide callbacks such as `onChange`, `onClick`, `onConfirm`, and `onCancel`; use
   a fixed Storybook action or callback in the story instead.
-- Hide styling and implementation hooks such as `className` and `style`. When
-  the prop would otherwise appear in the Docs table, disable its table row as
-  well: `className: { control: false, table: { disable: true } }`.
+- Hide styling and implementation hooks such as `className` and `style`.
+- Hide refs, router or store hooks (such as `navigate`), fixture objects and
+  arrays (lists of entries, members, accounts), and scalar props that change
+  nothing visible with the story's fixtures.
+- Hide `?: never` members of a props union; they are not real props.
 - Keep `children` as a text control only when changing the text is itself a
   useful part of the component review (for example, a selector label).
 
