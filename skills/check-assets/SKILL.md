@@ -50,6 +50,10 @@ named design variants. It is not a substitute for a full CSS parity review.
 
 - A name match is not proof that an existing icon is correct; compare its
   glyph and rendered dimensions to the design source.
+- Export an icon with its square icon frame, never as the cropped inner
+  glyph. Take the asset from the instance in the slot where the component
+  uses it, at that instance's size, and center it; do not recreate the
+  frame's padding with manual offsets.
 - A design preview frame can demonstrate an asset but does not by itself add a
   fixed component width or height contract.
 - Use canonical design tokens for any color that has one. When filtering is
