@@ -52,6 +52,24 @@ When Figma uses an instance of an existing design-system primitive, require the
 matching primitive in React when the target project provides one. Do not accept
 a hand-drawn CSS imitation as an equivalent implementation.
 
+### Inspection pitfalls
+
+- **Image colors:** a fill can carry image adjustments (hue, saturation,
+  exposure) that design-context and variable tools do not show. Verify an
+  icon's color against the node's rendered export, not against the raw image
+  fill.
+- **Instance content:** design context can return a nested instance with its
+  main component's defaults (placeholder text, a default icon or color)
+  instead of the applied overrides. Confirm visible content against a
+  screenshot of that exact node before reporting a Figma inconsistency.
+- **Usage counts:** instance lookups may cover only the loaded page. Never
+  conclude that a component is unused from an instance count; inspect the
+  likely parent components instead.
+- **Legacy font variables:** when text is bound to a legacy font variable that
+  the project has replaced, use the project's current font token for the
+  family, take size and line height from Figma, and do not report the family
+  as a mismatch.
+
 ## Exhaustive CSS comparison
 
 Build a line-by-line comparison ledger for every applicable visual declaration
@@ -65,6 +83,19 @@ in every style source that affects the requested component. Include:
 For each source declaration, record its file and line, selector, property, literal/token expression, resolved rendered value, matching Figma property/value, and verdict. Do not skip a line because it appears cosmetic or because another declaration seems similar.
 
 Also account for Figma properties that have no matching CSS line. They are discrepancies, not omissions from the report.
+
+## Rendered measurement
+
+When the component can be rendered (for example in Storybook), measure the
+rendered result with a browser: box sizes, gaps between elements, positions
+relative to their container, and computed colors and fonts. Compare these
+numbers with Figma, and record them as ledger evidence.
+
+Reading CSS is not enough for layout. Padding added on top of a width
+(`content-box`), wrapper elements that a primitive inserts between a container
+and its children, and inherited styles all change the result without appearing
+in the component's own style sources. Render the story that shows the Figma
+example, not a made-up one, so the numbers are comparable.
 
 ## Token policy
 
@@ -100,9 +131,14 @@ Compare state styling explicitly. Verify that:
 
 ## Result format
 
-Report in the user's language; otherwise use English. Keep file paths,
-identifiers, token names, Figma
-labels unchanged. Use this exact structure:
+Write the full report to a file, not into the reply: use the location the
+project or user names, otherwise `docs/audits/<Component>.md`. In the reply,
+give only the result, the first required correction (if any), and the report
+path; the remaining corrections are handled one at a time.
+
+Write the report in the user's language; otherwise use English. Keep file
+paths, identifiers, token names, and Figma labels unchanged. Use this exact
+structure:
 
 ```md
 ## Figma-to-React audit: <Component>

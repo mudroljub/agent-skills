@@ -1,6 +1,6 @@
 ---
 name: sync-reference-table
-description: Set up or update docs/REFERENCE_TABLE.md by mapping project components to canonical Figma references. Use when creating the component inventory or reconciling Figma, code, and table changes; do not use for visual parity audits.
+description: Set up, update, or close rows of docs/REFERENCE_TABLE.md, which maps project components to canonical Figma references. Use when creating the component inventory, reconciling Figma, code, and table changes, or finishing an in-progress row one at a time (for example "compare the next one with Figma", "close this row", "mark it done"); for the visual parity audit itself, use a design-parity skill.
 ---
 
 # Sync Reference Table
