@@ -50,6 +50,25 @@ changed.
    Figma and code. Report ambiguous, removed, or conflicting mappings instead
    of guessing or deleting them.
 
+### Close a row
+
+Use close when the user wants to finish an in-progress row, usually one row at
+a time in table order.
+
+1. Ask the user to compare the row's story with its Figma reference visually.
+2. Audit the component's tokens and measurements against Figma, for example
+   with a dedicated design-parity skill when the project has one. Report the
+   differences one at a time and fix only those the user approves.
+3. Check that the component name and its prop and variant names match the
+   Figma component. Propose a rename when they differ.
+4. Set the closing status only after the user confirms it. An agent's own
+   implementation stays in progress until then.
+
+Write a status note on its own line after the status label, for example
+`🔄 In progress<br>Needs translations`, never in parentheses. Keep a note only
+while it records something still open, and remove it when the user calls it
+redundant.
+
 ## Figma references
 
 Use available Figma inspection tools to confirm every new or changed node;
@@ -70,13 +89,13 @@ recheck before changing the reference table.
 
 ## Boundaries
 
-- Modify only `docs/REFERENCE_TABLE.md`.
-- Do not modify components, stories, tests, Figma designs, or unrelated
-  documentation.
+- Modify only `docs/REFERENCE_TABLE.md`. In close mode, also change the
+  components and stories the user approves fixing.
+- Do not modify Figma designs or unrelated documentation.
 - Do not delete existing rows or project-specific fields without explicit user
   instruction.
-- Do not claim visual parity or change a component's implementation status;
-  those require separate evidence and user decision.
+- Do not claim visual parity or change a component's implementation status,
+  except in close mode after the user confirms it.
 
 ## Report
 
