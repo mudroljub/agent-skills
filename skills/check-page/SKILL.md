@@ -25,59 +25,96 @@ page puts them together and fixes what Figma clearly specifies.
 5. Order the plan by the user's priority; ask only if none is given.
 
 Keep the plan where the project keeps internal working documents, and add a
-`Status` column for pages.
+`Status` column for pages. Give it a "Questions for later" section and a
+"Lessons" section so a long run never has to stop for a decision.
 
-## 2. Look at the real page
+## 2. Read Figma economically
+
+Large screens are expensive to inspect; spend tokens on the nodes you compare.
+
+1. Screenshot the whole frame first, then call metadata once to get the child
+   ids. A full-screen frame often repeats shared chrome (headers, menus), so
+   do not repeat that call.
+2. Call design context on the content node only. Never call it on a container
+   that repeats a component many times (a list panel): fetch one instance and
+   read the container's own fill, padding, and gaps separately.
+3. Instance sublayer ids cannot be screenshotted; download the assets of the
+   parent instance instead to get the source image.
+4. Look at every overlay in a frame (tooltips, menus, dropdowns), not only the
+   state the frame is named after.
+5. Note the vertical rhythm. Screens are usually built from one repeated gap
+   (for example 24px between every block and divider); implementing the rhythm
+   fixes many measurements at once.
+
+## 3. Look at the real page
 
 Compare against the running app, not against a mental model of the code.
 
 1. Open the page in a browser tool at the Figma frame size. Sign in the way the
    project does locally (ask the user how), and use an account whose data shows
-   the designed state.
-2. Take a screenshot and read computed styles and bounding boxes for the blocks
-   in question (`getBoundingClientRect`, `getComputedStyle`).
-3. If a needed state cannot be reproduced with real data, a temporary local
-   hack is acceptable only with the user's consent; back up the file and revert
-   it right after the check.
-4. After a code change, confirm the new build is served (bundle timestamp, or a
-   cache-busted stylesheet) before judging the result.
+   the designed state. Check that the route shows the designed variant (an
+   "own" page and a "public" page can share a component but not a route).
+2. Prefer a small scripted browser runner over interactive tool calls when the
+   tool returns a page snapshot after every action: one script per state that
+   signs in, reaches the state, and prints bounding boxes and computed styles
+   for the blocks in question, plus clipped screenshots.
+3. Reach states the local data cannot show with temporary hacks: flip a
+   feature flag, skip a loading state, relax a route guard, or hardcode the
+   Figma values straight into the markup. Ask first unless the user has agreed
+   to hacks for the run. Keep a list of hacked files, never trigger real
+   actions (save, leave, buy), and revert every hack right after the check;
+   when real fixes land in the same file, revert the hack with a targeted edit
+   instead of restoring a backup.
+4. After a code change, wait until the dev build is newer than the changed
+   sources (compare file times instead of sleeping) and confirm the new build
+   is served before judging the result.
 
 Ask before installing tools or browsers; never start long setups silently.
 
-## 3. Compare and fix
+## 4. Compare and fix
 
 1. For each visible block, find the Figma node and the React component that
    renders it. Prefer the design-system primitive Figma uses (a library button,
-   dropdown, or tab) over hand-made imitations.
+   dropdown, tab bar, or link button) over hand-made imitations, and remove
+   overrides the current library version no longer reads.
 2. Measure: positions, gaps, sizes, font size and weight, line height, color
    tokens, icon size, and alignment. Content differences count too, for example
-   Figma showing a value without an extra suffix.
-3. Fix what Figma clearly specifies without asking. When Figma is silent or the
-   sample data may simply lack a feature (an empty badge, a missing rank),
-   keep the current behavior and record a question for the designer.
+   Figma showing a value without an extra suffix, or two sentences on separate
+   lines.
+3. Fix what Figma clearly specifies without asking. Record a question instead
+   when Figma is silent, the sample data may lack a feature, frames of the same
+   screen disagree (a width or padding that differs between instances), or the
+   fix would need a new text string or a library change without a reference.
 4. When the same element repeats across screens (for example a dropdown trigger
    with a down arrow), create one shared local component instead of repeating
    props and assets.
-5. Fix a rendering bug where it originates. If a library component breaks the
-   layout, trace the CSS rule to its source, fix it in the library with a test
-   and a changelog entry, and verify the effect in the browser before the user
-   publishes a new version.
-6. Take icons from the instance in the slot where Figma uses it, at that size.
-   A raster icon in Figma stays raster; exporting it as SVG gains nothing.
+5. Before changing a shared component or stylesheet, list its other consumers
+   and re-check them in the browser; keep a page-specific fix scoped (for
+   example by a state class) when another consumer depends on the old layout.
+6. Fix a rendering or behavior bug where it originates. If a library component
+   breaks the layout, trace the CSS rule to its source, fix it in the library
+   with a test and a changelog entry, and verify the effect in the browser
+   before the user publishes a new version.
+7. Take icons from the instance in the slot where Figma uses it, at that size
+   and with the same crop. A raster icon in Figma stays raster; exporting it as
+   SVG gains nothing.
 
-## 4. Record and verify
+## 5. Record and verify
 
 1. Keep findings per page as a checklist. Check items off with a short note of
-   what was done; do not delete them, because the plan is the record.
+   what was done; do not delete them, because the plan is the record. Copy each
+   open question to "Questions for later" and move on.
 2. Update the component inventory (for example `docs/REFERENCE_TABLE.md`) for
    newly mapped or new components, with an in-progress status until the user
    confirms.
-3. Run the project's full verification (lint, types, tests, Storybook build)
-   and re-check the page in the browser.
-4. Mark the page done in the plan's `Status` column, noting open designer
-   questions.
+3. After each page run the linters and the affected tests; run the full
+   verification (lint, types, tests, Storybook build) at the end and re-check
+   the pages in the browser.
+4. Mark the page done in the plan's `Status` column, noting open questions.
+5. Write down what made the run slower or wrong in the plan's "Lessons"
+   section, so the skill can be improved afterwards.
 
 ## Report
 
-Report in the user's language. Name the page, what changed, what was verified in
-the browser, and the one next open item.
+Report in the user's language. Name the pages covered, what changed, what was
+verified in the browser, and the one next open item.
