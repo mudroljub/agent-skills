@@ -41,8 +41,6 @@ named design variants. It is not a substitute for a full CSS parity review.
    hand.
 7. Add or update review examples for all component-owned types, sizes, and
    states needed for design review. Use Storybook when the project has it.
-   Examples supply consumer-provided image fixtures through props; they do not
-   cause the production component to import those fixtures.
 8. Verify asset paths, all map keys, rendered intrinsic sizes, and state/tint
    behavior.
 
@@ -54,8 +52,7 @@ named design variants. It is not a substitute for a full CSS parity review.
   glyph. Take the asset from the instance in the slot where the component
   uses it, at that instance's size, and center it; do not recreate the
   frame's padding with manual offsets.
-- A design preview frame can demonstrate an asset but does not by itself add a
-  fixed component width or height contract.
+- A raster icon in Figma stays raster; exporting it as SVG gains nothing.
 - Use canonical design tokens for any color that has one. When filtering is
   necessary, its effective color must equal the design value.
 - Avoid loading an entire unrelated asset catalog to render one variant.
@@ -64,8 +61,7 @@ named design variants. It is not a substitute for a full CSS parity review.
 
 ## Report
 
-Report briefly in the user's language; otherwise use English. Include **only
-actionable findings**:
+Include **only actionable findings**:
 
 - missing, incorrect, or unmapped component-owned variants;
 - incorrect asset path, intrinsic/rendered dimension, state, tint, filter, or design-asset mismatch;
@@ -74,5 +70,4 @@ actionable findings**:
 - missing design assets or ambiguous ownership that require a user decision.
 
 Do not list assets, mappings, fixtures, or checks that are correct. If no
-actionable findings exist, report only a concise equivalent of `No issues
-found.` in the user's language.
+actionable findings exist, report only that no issues were found.

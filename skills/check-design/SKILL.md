@@ -20,8 +20,6 @@ Treat Figma as the visual source of truth. This is a strict implementation audit
 4. A reference table may include an implementation `Status` and other fields,
    but they are informational only: they do not select audit scope and must
    not be changed.
-5. This audit is read-only evidence. It never grants approval to release,
-   merge, or change project tracking data.
 
 ## Required sources
 
@@ -44,13 +42,12 @@ the requested node and every relevant variant/state shown by Figma:
 - default, hover, active/pressed, selected, disabled, focus, and open/closed states when present;
 - each size, orientation, density, and semantic variant;
 - nested atoms, icon instances, dividers, and assets;
-- root constraints (`min/max-width`, `min/max-height`) separately from a presentation frame's fixed dimensions.
+- root constraints (`min/max-width`, `min/max-height`) separately from a presentation frame's fixed dimensions. A table cell with equal min and max is fixed; a cell with only a min stays fluid.
+
+Verify that library-component instances in Figma correspond to the matching
+code components.
 
 Record the actual Figma values and token bindings. A screenshot alone is insufficient when inspectable Figma properties or variables are available.
-
-When Figma uses an instance of an existing design-system primitive, require the
-matching primitive in React when the target project provides one. Do not accept
-a hand-drawn CSS imitation as an equivalent implementation.
 
 ### Inspection pitfalls
 
@@ -132,12 +129,9 @@ Compare state styling explicitly. Verify that:
 ## Result format
 
 Write the full report to a file, not into the reply: use the location the
-project or user names, otherwise `docs/audits/<Component>.md`. In the reply,
-give only the result, the first required correction (if any), and the report
-path; the remaining corrections are handled one at a time.
+project or user names, otherwise `docs/audits/<Component>.md`.
 
-Write the report in the user's language; otherwise use English. Keep file
-paths, identifiers, token names, and Figma labels unchanged. Use this exact
+Keep file paths, identifiers, token names, and Figma labels unchanged. Use this exact
 structure:
 
 ```md
@@ -168,10 +162,7 @@ structure:
 
 `PASS` requires an empty **Required corrections** section and no unresolved verification limits. `BLOCKED` is required if the requested component or Figma node is unavailable, or necessary Figma/runtime evidence cannot be obtained.
 
-## Change behavior
+## Corrections
 
-Audit is read-only by default. Do not change implementation, tokens, stories,
-tests, or project tracking data unless the user explicitly asks to fix the
-reported mismatches. When asked to fix them, preserve the ledger, make only
-exact corrections supported by Figma/token evidence, then re-run the affected
-scope and report the changed lines.
+For corrections, preserve the ledger, make only exact changes supported by
+Figma/token evidence, then re-run the affected scope and report the changed lines.

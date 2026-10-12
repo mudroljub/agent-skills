@@ -6,6 +6,7 @@
       "title": "Design systems",
       "description": "Figma parity, assets, design tokens, and component references.",
       "skills": [
+        "figma-authority",
         "check-assets",
         "check-design",
         "sync-design-tokens",

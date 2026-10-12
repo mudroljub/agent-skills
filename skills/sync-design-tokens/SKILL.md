@@ -107,14 +107,13 @@ Use update when `tokens/` and a token generator already exist.
    declared input set.
 2. Run the token-generation command and inspect the generated outputs for the
    expected names, values, modes, aliases, and units.
-3. Run the relevant style/build/type checks the project supports. Do not claim
-   a skipped command passed.
+3. Run the relevant style/build/type checks the project supports.
 4. Verify the generated unit policy preserves the Figma values in the target
    runtime and does not impose an undocumented global host-style contract.
 
 ## Report
 
-Report in the user's language; otherwise use English. Include:
+Include:
 
 - selected mode, Figma collections and modes, and the token input files;
 - generator command, generated output locations, and output-unit policy;

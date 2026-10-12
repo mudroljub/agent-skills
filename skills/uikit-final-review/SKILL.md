@@ -1,13 +1,11 @@
 ---
 name: uikit-final-review
-description: Run the pre-approval final review for changed UIKit components. Use only when the user asks for a final review, readiness check, or pre-approval verification; apply its checklist, verify relevant checks, update actual Unit Tests state, and never change Status.
+description: Run the final review for changed UIKit components. Use when the user asks for a final review, readiness check, or pre-approval verification; apply its checklist, verify relevant checks, and update actual Unit Tests state. Component refactoring and migration status updates are out of scope.
 ---
 
 # UIKit Final Review
 
-Perform the project's final implementation check before the user decides a
-component's migration status. This is a verification workflow, not permission
-to refactor or to approve a component.
+Produce final implementation evidence for changed UIKit components.
 
 ## Scope
 
@@ -20,34 +18,27 @@ to refactor or to approve a component.
 
 ## Verification
 
-Run each relevant project check that the environment permits:
+Run each relevant project check that the environment permits — lint, type
+check, tests, and build — using the commands defined in the project's package
+manifest.
 
-```powershell
-yarn lint
-yarn typecheck
-yarn test
-yarn build
-```
-
-Do not claim a skipped or unavailable command passed. Report its limit and
-the reason. Do not run Playwright visual regression tests during active
+Do not run Playwright visual regression tests during active
 migration; visual snapshots are batch work after migration.
 
-For a Figma visual-parity audit, use `check-design` separately. This skill
+A Figma visual-parity audit is out of scope. This skill
 records whether that evidence is available but does not duplicate its
 line-by-line ledger.
 
 ## Reference table boundary
 
-- Update only the matching `Unit Tests` cell when actual test evidence changes
-  its truthfulness.
-- Never change the table's `Status` cell, even when every check passes.
+- When the table has a `Unit Tests` column, update only the matching cell, and
+  only when actual test evidence changes its truthfulness.
+- The table's `Status` cell is outside this review's scope.
 - Do not alter Figma links, source mappings, or unrelated rows.
 
 ## Report
 
-Report in the user's language; otherwise use English. Keep commands, paths,
-and status values unchanged.
+Keep commands, paths, and status values unchanged.
 Use this compact structure:
 
 ```md
@@ -56,14 +47,14 @@ Use this compact structure:
 **Result:** READY | CORRECTIONS REQUIRED | VERIFICATION LIMITED
 
 ### Checks
-- <FINAL_REVIEW item>: pass | fail | not verified — <evidence>
+- <checklist item>: pass | fail | not verified — <evidence>
 
 ### Commands
 - `<command>`: pass | fail | not run — <reason or relevant result>
 
 ### Table
 - `Unit Tests`: updated | already accurate | not applicable
-- `Status`: unchanged; awaits user approval
+- `Status`: unchanged
 
 ### Required corrections
 - <only unresolved items; omit this section when empty>
@@ -73,5 +64,4 @@ Use this compact structure:
 ```
 
 `READY` means every applicable checklist item passed and no verification limit
-remains. It is evidence for the user's final decision, never approval to
-change status.
+remains.

@@ -75,7 +75,7 @@ when it is absent from the component contract.
 ## Verification and table boundary
 
 Run the focused test command first, then the relevant broader checks when the
-environment permits. Do not claim a skipped command passed. Do not run visual
+environment permits. Do not run visual
 end-to-end tests as part of this skill.
 
 When the project tracks test status, read [the optional status target](references/project-testing.md).
@@ -85,7 +85,7 @@ target is configured, do not create one.
 
 ## Report
 
-Report briefly in the user's language; otherwise use English:
+Include:
 
 - unit and integration scenarios added or updated;
 - meaningful axes and interaction flows covered;

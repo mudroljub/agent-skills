@@ -13,12 +13,9 @@ convention.
   `<ComponentName>_`. When the installed Storybook version supports it, tag it
   with `!dev`; otherwise use the project's existing way to hide a Docs-only
   story.
-- Pass useful scalar public props through `args` and define their controls explicitly in `argTypes`. Hide every prop that cannot be meaningfully tried from the panel, including its Docs table row.
-- Keep review stories such as `Examples`, `AllVariants`, or `Interactive` only
-  when useful for design or state review.
-- Do not add production component props only to reproduce design variants.
-  Reuse the existing API, native interaction states, or Storybook mechanisms
-  instead.
+
+Apply the [entrypoint's Docs and controls rules](../SKILL.md#docs-and-controls)
+to the fallback below.
 
 ## Props/Controls story
 
@@ -56,42 +53,18 @@ export const ComponentName_: Story = {
 ```
 
 - `args` provide the default values shown in Docs; `argTypes` define the available controls.
-- Use `{ control: false, table: { disable: true } }` for callbacks, `className`, `children` and other ReactNode/slot props, fixture objects and refs when they cannot be usefully tried from the panel. Provide their fixed composition in `args` or `render`. The Docs table shows only props with a usable control.
-- Keep a control only when a story reader can change it and observe a meaningful result. Do not expose implementation hooks such as `className` merely because Storybook inferred them.
-- Add `Examples` when a separate visual comparison of multiple design
-  variants, states, or usage cases is required.
-- For components that require application context, use the shared preview
-  decorator or mock state; keep fixture data in the story and avoid changing
-  the production component API.
-- When stories are moved or renamed, confirm that Docs and the intended visible
-  stories appear in Storybook navigation.
 
-## Open dropdown previews
+## Out-of-flow previews
 
-An open menu or select can render outside the component's normal flow. When
-its Docs story is clipped, give only that story an explicit preview height:
-
-```tsx
-parameters: {
-  docs: {
-    story: { height: '250px' },
-  },
-},
-```
-
-Do not turn this into a global layout default.
+Use the [dropdown and out-of-flow sizing patterns](project-patterns.md#dropdown-and-menu-preview-sizing)
+for components whose rendered content falls outside normal flow.
 
 ## Examples annotation labels
 
 An approved local pattern may define the structural layout. Otherwise use a
-short heading, a contained example, then annotation labels beneath it. When
-labels document public API semantics, use the exact lowercase prop name and
-add a concise value note only if that improves the API explanation.
-
-Keep annotation labels outside the rendered component. Follow an approved
-local pattern when one specifies annotation styling; otherwise keep the
-treatment restrained and consistent within the story. Do not invent a new
-annotation system for one component.
+short heading, a contained example, then annotation labels beneath it. Apply
+the [entrypoint's annotation rules](../SKILL.md#examples-layout); otherwise keep
+the visual treatment restrained and consistent within the story.
 
 ## Preview width
 
@@ -99,6 +72,9 @@ When a design source shows a fixed frame width only as a presentation example,
 apply that width to the Storybook preview wrapper. Keep the component itself
 flexible unless the component contract explicitly defines a fixed, minimum, or
 maximum width.
+
+Set presentation widths per story. Use a global canvas width only when that
+is the project's established convention.
 
 ```tsx
 <div style={{ width: '360px' }}>

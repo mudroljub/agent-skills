@@ -1,4 +1,4 @@
-import { type CSSProperties, useState } from 'react';
+import { type CSSProperties, Fragment, useState } from 'react';
 import { action } from 'storybook/actions';
 import { useArgs } from 'storybook/preview-api';
 
@@ -6,7 +6,7 @@ import Input from './Input';
 
 import type { InputProps } from './Input';
 
-const InputPreview = (args: Pick<InputProps, 'value' | 'variant' | 'label' | 'isDisabled' | 'maxLength'>) => {
+const InputPreview = (args: InputProps) => {
   const [, updateArgs] = useArgs();
 
   return (
@@ -25,24 +25,20 @@ const InputPreview = (args: Pick<InputProps, 'value' | 'variant' | 'label' | 'is
 export default {
   title: 'Inputs/Input',
   component: Input,
-  parameters: {
-    controls: {
-      include: ['value', 'label', 'variant', 'isDisabled', 'maxLength'],
-    },
-  },
   argTypes: {
     value: { control: 'text' },
     label: { control: 'text' },
     variant: { control: 'select', options: ['chatbox', 'searchbar'] },
     isDisabled: { control: 'boolean' },
     maxLength: { control: 'number' },
-    className: { control: false },
-    onBlur: { control: false },
-    onChange: { control: false },
-    onFocus: { control: false },
-    onKeyDown: { control: false },
+    className: { control: false, table: { disable: true } },
+    onBlur: { control: false, table: { disable: true } },
+    onChange: { control: false, table: { disable: true } },
+    onFocus: { control: false, table: { disable: true } },
+    onKeyDown: { control: false, table: { disable: true } },
   },
 };
+
 export const Input_ = {
   tags: ['!dev'],
   render: InputPreview,
@@ -55,77 +51,54 @@ export const Input_ = {
   },
 };
 
-const PLACEHOLDER_TEXT = 'Label text / Input text';
-const EXAMPLE_VALUE = 'Example text';
+const LABEL = 'Label text / Input text';
 
-const rowStyle: CSSProperties = {
-  display: 'flex',
-  gap: '40px',
-  alignItems: 'flex-start',
-  marginBottom: '15px',
+const VARIANTS = ['chatbox', 'searchbar'] as const;
+
+const STATES = [
+  { label: 'default', props: { value: '' } },
+  { label: 'isDisabled=true', props: { value: '', isDisabled: true } },
+  { label: 'value=Example text', props: { value: 'Example text' } },
+];
+
+const gridStyle: CSSProperties = {
+  display: 'inline-grid',
+  gridTemplateColumns: `max-content repeat(${VARIANTS.length}, 270px)`,
+  gap: '16px 24px',
+  alignItems: 'center',
 };
 
-const labelStyle: CSSProperties = {
-  color: 'rgba(255,255,255,0.3)',
-  fontSize: '10px',
-  marginBottom: '5px',
+const headingStyle: CSSProperties = {
+  color: 'rgba(255,255,255,0.6)',
+  fontSize: '12px',
 };
 
-const variantLabelStyle: CSSProperties = {
+const annotationStyle: CSSProperties = {
   color: 'rgba(255,255,255,0.4)',
-  fontSize: '10px',
-  marginBottom: '5px',
-  textTransform: 'uppercase',
-  fontWeight: 'bold',
+  fontSize: '11px',
 };
 
-type InputItemProps = {
-  variant: 'chatbox' | 'searchbar';
-  value: string;
-  isDisabled?: boolean;
-};
-
-const InputItem = ({ variant, value, isDisabled }: InputItemProps) => {
+const InputItem = ({ value, ...props }: Pick<InputProps, 'variant' | 'value' | 'isDisabled'>) => {
   const [inputValue, setInputValue] = useState(value);
 
-  return (
-    <div style={{ minWidth: '270px' }}>
-      <Input
-        value={inputValue}
+  return <Input {...props} value={inputValue} label={LABEL} onChange={setInputValue} />;
+};
+
+export const Examples = () => (
+  <div style={gridStyle}>
+    <div style={headingStyle}>State</div>
+    {VARIANTS.map((variant) => (
+      <div key={variant} style={headingStyle}>
         variant={variant}
-        label={PLACEHOLDER_TEXT}
-        isDisabled={isDisabled}
-        onChange={setInputValue}
-      />
-    </div>
-  );
-};
-
-export const Examples = () => {
-  return (
-    <div style={{ padding: '20px' }}>
-      <div style={{ display: 'flex', gap: '40px', marginBottom: '20px' }}>
-        <div style={{ ...variantLabelStyle, width: '270px' }}>type=chatbox</div>
-        <div style={{ ...variantLabelStyle, width: '270px' }}>type=searchbar</div>
       </div>
-
-      <div style={labelStyle}>state=default</div>
-      <div style={rowStyle}>
-        <InputItem variant="chatbox" value="" />
-        <InputItem variant="searchbar" value="" />
-      </div>
-
-      <div style={labelStyle}>state=disabled</div>
-      <div style={rowStyle}>
-        <InputItem variant="chatbox" value="" isDisabled />
-        <InputItem variant="searchbar" value="" isDisabled />
-      </div>
-
-      <div style={labelStyle}>state=text inside</div>
-      <div style={rowStyle}>
-        <InputItem variant="chatbox" value={EXAMPLE_VALUE} />
-        <InputItem variant="searchbar" value={EXAMPLE_VALUE} />
-      </div>
-    </div>
-  );
-};
+    ))}
+    {STATES.map(({ label, props }) => (
+      <Fragment key={label}>
+        <div style={annotationStyle}>{label}</div>
+        {VARIANTS.map((variant) => (
+          <InputItem key={variant} variant={variant} {...props} />
+        ))}
+      </Fragment>
+    ))}
+  </div>
+);

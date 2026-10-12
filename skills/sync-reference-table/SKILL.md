@@ -1,12 +1,14 @@
 ---
 name: sync-reference-table
-description: Set up, update, or close rows of docs/REFERENCE_TABLE.md, which maps project components to canonical Figma references. Use when creating the component inventory, reconciling Figma, code, and table changes, or finishing an in-progress row one at a time (for example "compare the next one with Figma", "close this row", "mark it done"); for the visual parity audit itself, use a design-parity skill.
+description: Set up, update, or close rows of docs/REFERENCE_TABLE.md, which maps project components to canonical Figma references. Use when creating the component inventory, reconciling Figma, code, and table changes, or finishing an in-progress row one at a time (for example "compare the next one with Figma", "close this row", "mark it done").
 ---
 
 # Sync Reference Table
 
 Keep `docs/REFERENCE_TABLE.md` aligned with the canonical Figma component
-library and the project's public component code. Choose one `Component` link
+library and the project's public component code. List only the project's own
+components, never a library's; recheck every story link after a story title
+changes. Choose one `Component` link
 convention for the whole table: in projects with Storybook, link only to a
 component's own story and leave components without one unlinked; in projects
 without Storybook, link to source files. `Figma` is its canonical Figma link,
@@ -56,18 +58,14 @@ Use close when the user wants to finish an in-progress row, usually one row at
 a time in table order.
 
 1. Ask the user to compare the row's story with its Figma reference visually.
-2. Audit the component's tokens and measurements against Figma, for example
-   with a dedicated design-parity skill when the project has one. Report the
-   differences one at a time and fix only those the user approves.
+2. Audit the component's tokens and measurements against Figma and record
+   the differences with evidence.
 3. Check that the component name and its prop and variant names match the
    Figma component. Propose a rename when they differ.
-4. Set the closing status only after the user confirms it. An agent's own
-   implementation stays in progress until then.
 
 Write a status note on its own line after the status label, for example
 `🔄 In progress<br>Needs translations`, never in parentheses. Keep a note only
-while it records something still open, and remove it when the user calls it
-redundant.
+while it records something still open.
 
 ## Figma references
 
@@ -75,8 +73,7 @@ Use available Figma inspection tools to confirm every new or changed node;
 follow the chosen tool's prerequisites. A canonical link identifies the actual
 component or component set and opens a useful, human-readable reference frame.
 Do not substitute a broad page, tutorial, or isolated variant merely because it
-is easier to find. If several credible nodes remain, report the candidates and
-ask the user to choose.
+is easier to find. If several credible nodes remain, report the candidates.
 
 ## Storybook link verification
 
@@ -89,18 +86,15 @@ recheck before changing the reference table.
 
 ## Boundaries
 
-- Modify only `docs/REFERENCE_TABLE.md`. In close mode, also change the
-  components and stories the user approves fixing.
+- The scope is `docs/REFERENCE_TABLE.md`; close mode also covers the affected
+  components and stories.
 - Do not modify Figma designs or unrelated documentation.
-- Do not delete existing rows or project-specific fields without explicit user
-  instruction.
-- Do not claim visual parity or change a component's implementation status,
-  except in close mode after the user confirms it.
+- Preserve existing rows and project-specific fields.
+- Do not claim visual parity.
 
 ## Report
 
-Report in the user's language; otherwise use English. Include only actionable
-results:
+Include only actionable results:
 
 - table created or updated, with the selected mode;
 - rows added or changed and their Figma nodes;

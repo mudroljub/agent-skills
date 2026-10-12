@@ -12,31 +12,10 @@ treatment; do not execute them or copy their project-specific imports.
 ## Approved reference extracts
 
 - [`Button/Examples`](Button/Button.stories.tsx) is the approved reference for
-  visual example layout, column and row hierarchy, and annotation treatment.
+  a comparison grid: equal columns per variant, states in rows, the shared
+  heading shown once, and fully hidden non-interactive props.
 - [`Input/Examples`](Input/Input.stories.tsx) is the approved reference when
-  annotations describe public prop values and states.
-
-## Props and controls
-
-Keep the Docs controls and the Docs props table limited to props that a reader
-can meaningfully try and observe in the story. "Hide" below always means hiding
-both the control and the table row: `{ control: false, table: { disable: true } }`.
-
-- Keep scalar visual props such as enums, booleans, text, and relevant numbers.
-- Hide `children` when the story supplies fixture content or a composed slot.
-- Hide callbacks such as `onChange`, `onClick`, `onConfirm`, and `onCancel`; use
-  a fixed Storybook action or callback in the story instead.
-- Hide styling and implementation hooks such as `className` and `style`.
-- Hide refs, router or store hooks (such as `navigate`), fixture objects and
-  arrays (lists of entries, members, accounts), and scalar props that change
-  nothing visible with the story's fixtures.
-- Hide `?: never` members of a props union; they are not real props.
-- Keep `children` as a text control only when changing the text is itself a
-  useful part of the component review (for example, a selector label).
-
-Do not remove fixture values required to render the component. This guidance
-changes Storybook controls and documentation only; it does not change public
-component APIs.
+  annotations describe public prop values (`variant=…`, `isDisabled=true`).
 
 ## Dropdown and menu preview sizing
 
@@ -90,14 +69,11 @@ its Storybook preview visible.
 When several stories cover one component family, keep repeated fixture data in a
 small, typed story-only module and import it from each story. Preserve meaningful
 variants by deriving them from the shared fixture rather than copying a large
-object literal. Do not move fixture data into production components or change a
-public API only to support a story.
+object literal.
 
-When the rendered component reads Redux, router, or another required context,
-reuse an existing shared decorator when one exists. Otherwise provide the
-smallest story-local provider/mock state needed for the component to render;
-include non-empty fixture collections when the story is intended to review a
-table or list rather than its empty state.
+Include non-empty fixture collections when the story is intended to review a
+table or list rather than its empty state. Context-dependent stories follow
+the [entrypoint's setup rules](../SKILL.md#before-editing).
 
 ## Story discovery and index verification
 

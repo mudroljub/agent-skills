@@ -6,20 +6,17 @@
 
 - Verify that canonical tokens are used wherever Figma uses tokens.
 
-- Check `calc()` expressions in CSS files. When Figma provides a token, use it;
-  otherwise, use the exact Figma literal rather than deriving a value from
-  tokens.
+- Verify that `calc()` expressions do not approximate a Figma value for which
+  an exact token or literal exists.
 
-- Verify that a component imports only images inseparable from its visual
-  contract. Storybook stories must import all other images supplied through
-  props.
+- Verify asset ownership: component imports belong to its visual contract,
+  and consumer-provided example images remain story fixtures.
 
-- Verify whether the Figma component uses an existing UIKit atom. If so,
-  compose that atom instead of recreating it with manual CSS.
+- Verify that library-component instances in Figma correspond to the matching
+  code components.
 
-- Fixed dimensions from a Figma preview frame belong to the Storybook wrapper,
-  not the component. Transfer only explicitly defined `min/max-width` and
-  `min/max-height` constraints to the component.
+- Verify that presentation-frame dimensions are confined to the preview and
+  component dimensions follow explicit sizing constraints.
 
 - Verify every Figma state. Disabled, focus, pressed, and open states must not
   be accidentally overridden by a more general selector.
@@ -31,9 +28,8 @@
 - In selector/dropdown atoms, the `selected` state must not receive hover
   styling; the hover selector must exclude `.selected`.
 
-- Do not introduce a Figma-only prop (for example, `state`) merely to display a
-  variant. Present review variants through the existing API, CSS states, or
-  Storybook; some variants cannot be displayed without user interaction.
+- Verify that review variants use the existing public API or interaction
+  states, without Figma-only props added for stories.
 
 - Verify React APIs against the project's supported React range. When the
   target supports `ref` as a function-component prop, expose and pass that
@@ -50,8 +46,6 @@
   component. Replace manual "latest callback" refs when an Effect Event
   expresses the same intent.
 
-- Run the relevant checks: `yarn lint`, `yarn typecheck`, `yarn test`, and
-  `yarn build`.
+- Verify that relevant project checks have recorded results and any limits.
 
-- Keep the `Unit Tests` cell in `REFERENCE_TABLE.md` aligned with the actual
-  test state; do not change `Status`.
+- Verify that the reference-table update matches the final-review scope.

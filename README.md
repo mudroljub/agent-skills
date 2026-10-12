@@ -5,6 +5,7 @@ repository is available at [mudroljub/agent-skills](https://github.com/mudroljub
 
 ## Included skills
 
+- `figma-authority` — decide which design source wins and whether design intent is established.
 - `check-assets` — audit or implement component assets from a design source.
 - `check-design` — compare a React component with its Figma source.
 - `sync-design-tokens` — sync Figma variables and adopt exact design tokens.
@@ -61,6 +62,13 @@ npx skills add mudroljub/agent-skills -g -s perfect-developer -a claude-code cod
 ```
 
 ## Contributing
+
+Skills are independent: none may name or rely on another. Like ministries,
+each skill is responsible for one area, and every rule is defined in exactly
+one skill. A review checklist may list another area's rule as an item to
+verify, but never defines or changes it. Behaviour rules (how to reply, when to ask or
+act, where open items go, who approves a status) live only in the behaviour
+skills; task skills describe their task and never repeat them.
 
 Keep skills project-neutral. Do not add credentials, private URLs, proprietary
 assets, or references that require access to a particular application.
