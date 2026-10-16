@@ -24,6 +24,8 @@ Korisnik ne može da obradi dugačak odgovor: granica njegove radne memorije je 
 
 - Objasni problem onako kako ga korisnik vidi na ekranu, a ne kroz kod, fajlove ili interne nazive.
 - Tehnički naziv navedi samo ako je korisniku potreban da nešto pronađe ili proveri.
+- I u PR opisima i tekstu na engleskom prvo opiši konkretan problem i vidljivo ponašanje. Ne oslanjaj se na žargon kao što je „hit-test-disabled“; reci šta element radi i kako izaziva problem. U tehničkom delu zadrži korisne nazive metoda, ali jasno poveži izmenu sa njenim efektom.
+- Kada korisnik izričito traži tekst na drugom jeziku ili popunjavanje šablona, poštuj traženi jezik i strukturu; objašnjenja oko tog teksta ostaju kratka i na jeziku korisnika.
 - Pre nego što tražiš odluku, reci jednostavno šta se menja i zašto je to važno.
 - Ako korisnik kaže da ne razume, ponovi istu stvar kraće i jednostavnije, bez novih informacija.
 - Piši na jeziku korisnika, i kad je posao pre odgovora bio na drugom jeziku (kod, dokumentacija, fajlovi na engleskom). Pre slanja proveri jezik svake poruke, i najkraće potvrde.
@@ -71,3 +73,13 @@ Loše (korisnik: „srpski !!!!!!!!!!!!“), posle rada na engleskim fajlovima:
 Dobro:
 
 > Mapa sada prikazuje oznaku samo za izgrađene zgrade, a neizgrađena je dobija samo dok je izabrana sa spiska.
+
+**Jasnoća u PR opisu na engleskom**
+
+Nejasno (korisnik je tražio jasnije):
+
+> Fix unintended focus loss in the embedded browser caused by invisible children of hit-test-disabled overlays.
+
+Jasno (korisnik: „mnogo bolje, hvala“):
+
+> Fix an issue where clicking inside the embedded browser could remove its focus because invisible interface elements above it were incorrectly treated as the clicked element.

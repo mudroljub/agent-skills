@@ -44,8 +44,12 @@ boundaries:
 - focus, keyboard navigation, open/close, selection, and dismissal flows;
 - props, slots, and child atoms contributing to the rendered result.
 
-Use the real composed atoms. Mock only external side effects such as
-sound/game APIs, timers, or network boundaries; reset mocks between tests.
+Use the real composed atoms in integration tests, including components
+imported from workspace packages. An import prefix alone does not make a
+module a mocking boundary. Mock external side effects such as sound/game
+APIs, timers, or network boundaries; reset mocks between tests. An isolated
+unit test may replace a child outside its stated contract, but does not
+provide integration coverage for that child.
 
 ## Coverage design
 

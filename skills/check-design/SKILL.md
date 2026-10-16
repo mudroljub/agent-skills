@@ -62,10 +62,13 @@ Record the actual Figma values and token bindings. A screenshot alone is insuffi
 - **Usage counts:** instance lookups may cover only the loaded page. Never
   conclude that a component is unused from an instance count; inspect the
   likely parent components instead.
-- **Legacy font variables:** when text is bound to a legacy font variable that
-  the project has replaced, use the project's current font token for the
-  family, take size and line height from Figma, and do not report the family
-  as a mismatch.
+- **Legacy font variables:** accept a replacement font family only when a
+  documented, approved migration maps the legacy Figma variable to the
+  project's current font token. Record that mapping and its approval source
+  in the comparison ledger; keep size and line height from Figma. The current
+  code token alone is not evidence of approval. Without an approved mapping,
+  report the family difference as a mismatch, or record unresolved design
+  authority as a verification limit that prevents PASS.
 
 ## Exhaustive CSS comparison
 

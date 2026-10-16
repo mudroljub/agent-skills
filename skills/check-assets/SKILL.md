@@ -13,6 +13,15 @@ source without turning consumer-provided content into bundled component assets.
 Use this skill for component-owned icons, illustrations, textures, and their
 named design variants. It is not a substitute for a full CSS parity review.
 
+## Modes
+
+- **Audit:** inspect assets, mappings, and review examples, then report
+  actionable findings. Leave source files, asset files, and examples unchanged.
+  Treat implementation directions below as criteria to check.
+- **Implementation:** apply asset and example changes within the requested
+  scope, then verify the result. Finding a mismatch during an audit does not
+  switch the task into implementation.
+
 ## Workflow
 
 1. Read local component, asset, test, and review-example files. Inspect any
@@ -27,7 +36,8 @@ named design variants. It is not a substitute for a full CSS parity review.
    - **Consumer-provided:** an image, icon URL, or React node supplied through
      the public API. The component renders that value; the review example owns
      the fixture or import.
-4. Implement a typed, centralized mapping for component-owned assets. The
+4. Check for a typed, centralized mapping for component-owned assets; create
+   or update it in implementation mode. The
    component selects by its public variant props rather than exposing file
    paths or relying on loosely constructed import paths. Cover every design
    variant; report a missing mapping instead of silently substituting a
@@ -35,12 +45,13 @@ named design variants. It is not a substitute for a full CSS parity review.
 5. Prefer one source asset plus an exact CSS filter only when the design
    source changes tone alone and the rendered color matches exactly. Keep
    separate assets when glyph, geometry, texture, crop, or other pixels differ.
-6. Do not use temporary design-tool asset URLs in runtime source. Commit the
-   exported bytes under the repository's established asset location, or use
-   the project's existing matching asset. Never redraw an unavailable SVG by
-   hand.
-7. Add or update review examples for all component-owned types, sizes, and
-   states needed for design review. Use Storybook when the project has it.
+6. Check that runtime source does not use temporary design-tool asset URLs.
+   In implementation mode, commit the exported bytes under the repository's
+   established asset location, or use the project's existing matching asset.
+   Never redraw an unavailable SVG by hand.
+7. Check review-example coverage for all component-owned types, sizes, and
+   states needed for design review. Add or update examples in implementation
+   mode. Use Storybook when the project has it.
 8. Verify asset paths, all map keys, rendered intrinsic sizes, and state/tint
    behavior.
 
@@ -48,10 +59,12 @@ named design variants. It is not a substitute for a full CSS parity review.
 
 - A name match is not proof that an existing icon is correct; compare its
   glyph and rendered dimensions to the design source.
-- Export an icon with its square icon frame, never as the cropped inner
-  glyph. Take the asset from the instance in the slot where the component
-  uses it, at that instance's size, and center it; do not recreate the
-  frame's padding with manual offsets.
+- Export icons with a square icon frame by default, never cropped to the
+  inner glyph. Use a non-square frame only for an explicitly documented design
+  exception; the glyph's shape alone does not establish an exception. Take the
+  asset from the instance in the slot where the component uses it, at that
+  instance's size. Preserve its padding and glyph alignment without stretching
+  the glyph or recreating the frame's padding with manual offsets.
 - A raster icon in Figma stays raster; exporting it as SVG gains nothing.
 - Use canonical design tokens for any color that has one. When filtering is
   necessary, its effective color must equal the design value.
