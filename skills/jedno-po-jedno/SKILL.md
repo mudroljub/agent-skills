@@ -1,27 +1,30 @@
 ---
 name: jedno-po-jedno
-description: "Rad stavku po stavku za korisnika sa ograničenom radnom memorijom. Koristi kad posao proizvede više stavki (review, audit, spisak razlika, plan) ili kad postoje otvorena pitanja: stavke se čuvaju redom u trajnom md dokumentu i rešavaju jedna po jedna."
+description: "Vodi razgovor i rešavanje problema jedno po jedno: postavi jedno pitanje, sačekaj odgovor, pa nastavi. Običan razgovor ne zapisuj. Trajan spisak koristi samo za nerešene nalaze iz izveštaja ili niz problema koje ne možemo brzo i lako rešiti."
 ---
 
 # Jedno po jedno
 
-Korisnik ima ograničenu radnu memoriju i ne može da prati više stavki odjednom. Zato je rad jednonitan (single-threaded): posao sa više stavki vodi se kao red, u kome stavke čekaju u dokumentu, a rešavaju se jedna po jedna.
+Korisnik lakše prati jednu stvar u trenutku. To prvenstveno određuje tok razgovora, a ne obavezu pravljenja dokumenata.
 
-## Dugački sadržaj
+## Razgovor je podrazumevan
 
-Kad posao proizvede više stavki (code review, audit, spisak razlika, plan), ne stavljaj ih u odgovor.
+- Postavi jedno pitanje i sačekaj odgovor, pa postavi sledeće.
+- Više uzastopnih pitanja, odgovora, predloga ili kratkih odluka nije razlog za upisivanje u TODO.
+- Stvari koje možemo brzo i lako razjasniti ili rešiti obradi u razgovoru, jednu po jednu.
+- Kada rešenje ima nesporan i sporan deo, prvo uradi nesporan deo, pa pitaj samo za sporan. Sporan je deo koji ima stvarnu manu ili menja nešto van dogovorenog obima, na primer zajedničku biblioteku.
+- Ne dokumentuj odgovore i ne pravi MD fajlove radi čuvanja razgovora. Dokumentaciju menjaj kada je korisnik to zatražio, ne zato što je ovaj skil aktivan.
 
-1. Upiši sve stavke u TODO dokument, redom kojim će se rešavati.
-2. U odgovoru reci samo koliko stavki ima i iznesi prvu.
-3. Rešavajte stavke jednu po jednu.
+## Kada se stavke upisuju
 
-## TODO dokument
+Izuzetak su izveštaji sa nerešenim nalazima i nizovi zasebnih problema koje ne možemo odmah brzo i lako rešiti. Njih treba sačuvati za dalji rad.
 
-- Čuvaj redosled i stanje svih otvorenih pitanja u jednom TODO dokumentu, `TODO.md` u korenu repozitorijuma na kome se radi, osim ako korisnik ili projekat odrede drugo mesto (npr. `frontend/TODO.md`).
-- Novo otvoreno pitanje upiši odmah, kad nastane, na kraj spiska.
-- Upiši samo stavku sa stvarnom koristi (kvar, razlika, rizik, odluka); kozmetiku koju alati za proveru prihvataju ne upisuj.
-- Sledeći posao predlaži samo iz ovog dokumenta ili plana projekta.
-- Sledeća stavka je uvek prva na spisku. Ne preskači je i ne menjaj redosled bez dogovora sa korisnikom.
-- Kad se stavka zatvori, obriši je iz dokumenta. Ne čuvaj zatvorene stavke i ne menjaj im status.
-- Kad je dokument prazan, obriši ga.
-- Kad se razgovor vrati na posao posle prekida, nastavi od prve otvorene stavke.
+„Više stavki“ znači takav skup nerešenog posla, a ne sam broj pitanja, rečenica ili tačaka u odgovoru. Na primer, nekoliko kvarova iz pregleda koji zahtevaju odvojene popravke upisuje se; nekoliko pitanja koja korisnik može redom kratko da odgovori ne upisuje se.
+
+- Zapiši konkretne probleme i šta treba rešiti, bez prepisivanja odgovora ili celog razgovora.
+- Koristi postojeći projektni TODO ili mesto koje je korisnik odredio. Ako projekat već ima TODO sekciju, na primer u README-u, upiši stavke tamo i ne pravi novi `TODO.md`: dva spiska stvaraju zabunu i dupliranje. Samo za ovaj izuzetak, ako takvo mesto ne postoji, napravi `TODO.md` u korenu projekta.
+- U razgovoru iznesi samo prvu stavku i rešavajte ih jednu po jednu. Ostale ostaju u spisku.
+- Poštuj dogovoreni redosled; korisnikov nalog, npr. „od kraja“, ima prednost.
+- Obriši stavku kada je stvarno rešena. Sam odgovor ili njegovo zapisivanje nije dokaz da je problem rešen.
+- Posle prekida nastavi od sledeće nerešene stavke u dogovorenom redosledu.
+- Kada isprazniš namenski `TODO.md`, ukloni ga; ne briši postojeći README ili drugi zajednički dokument.
