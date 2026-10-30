@@ -1,9 +1,9 @@
 ---
-name: check-assets
-description: Audit or implement component assets from a design source, especially icon or image variants, sizes, states, tinting, and review examples. Use whenever a component imports, maps, exports, replaces, or displays visual assets; do not use for general visual CSS parity without asset work.
+name: match-assets
+description: Audit, fix, or implement component assets from a design source, especially icon or image variants, sizes, states, tinting, and review examples. Use whenever a component imports, maps, exports, replaces, or displays visual assets; do not use for general visual CSS parity without asset work.
 ---
 
-# Check Assets
+# Match Assets
 
 Keep asset ownership, variant mapping, and rendering faithful to the design
 source without turning consumer-provided content into bundled component assets.
@@ -13,14 +13,10 @@ source without turning consumer-provided content into bundled component assets.
 Use this skill for component-owned icons, illustrations, textures, and their
 named design variants. It is not a substitute for a full CSS parity review.
 
-## Modes
-
-- **Audit:** inspect assets, mappings, and review examples, then report
-  actionable findings. Leave source files, asset files, and examples unchanged.
-  Treat implementation directions below as criteria to check.
-- **Implementation:** apply asset and example changes within the requested
-  scope, then verify the result. Finding a mismatch during an audit does not
-  switch the task into implementation.
+An audit and an implementation follow the same workflow and fix asset
+mismatches within the component. An ambiguous design source,
+consumer-provided content, and changes outside the component are left to the
+user.
 
 ## Workflow
 
@@ -36,22 +32,19 @@ named design variants. It is not a substitute for a full CSS parity review.
    - **Consumer-provided:** an image, icon URL, or React node supplied through
      the public API. The component renders that value; the review example owns
      the fixture or import.
-4. Check for a typed, centralized mapping for component-owned assets; create
-   or update it in implementation mode. The
-   component selects by its public variant props rather than exposing file
+4. Create or update a typed, centralized mapping for component-owned assets.
+   The component selects by its public variant props rather than exposing file
    paths or relying on loosely constructed import paths. Cover every design
-   variant; report a missing mapping instead of silently substituting a
-   visually different asset.
+   variant; never substitute a visually different asset for a missing one.
 5. Prefer one source asset plus an exact CSS filter only when the design
    source changes tone alone and the rendered color matches exactly. Keep
    separate assets when glyph, geometry, texture, crop, or other pixels differ.
-6. Check that runtime source does not use temporary design-tool asset URLs.
-   In implementation mode, commit the exported bytes under the repository's
-   established asset location, or use the project's existing matching asset.
-   Never redraw an unavailable SVG by hand.
-7. Check review-example coverage for all component-owned types, sizes, and
-   states needed for design review. Add or update examples in implementation
-   mode. Use Storybook when the project has it.
+6. Replace temporary design-tool asset URLs in runtime source with the
+   exported bytes under the repository's established asset location, or with
+   the project's existing matching asset. Never redraw an unavailable SVG by
+   hand.
+7. Add or update review examples for all component-owned types, sizes, and
+   states needed for design review, in the project's story format.
 8. Verify asset paths, all map keys, rendered intrinsic sizes, and state/tint
    behavior.
 
@@ -74,13 +67,11 @@ named design variants. It is not a substitute for a full CSS parity review.
 
 ## Report
 
-Include **only actionable findings**:
-
-- missing, incorrect, or unmapped component-owned variants;
-- incorrect asset path, intrinsic/rendered dimension, state, tint, filter, or design-asset mismatch;
-- consumer-provided content incorrectly bundled by the component, or component-owned assets incorrectly left to consumers;
-- missing review-example coverage that prevents review of a component-owned variant, size, or state;
-- missing design assets or ambiguous ownership that require a user decision.
-
-Do not list assets, mappings, fixtures, or checks that are correct. If no
-actionable findings exist, report only that no issues were found.
+The record is the changed asset, source, and review-example files. Tell the
+user the variants, mappings, paths, dimensions, states, tints, and review
+examples that were changed, and the items left to the user: missing design
+assets, ambiguous design sources or ownership, consumer-provided content
+bundled by the component, and changes outside the component. Leave out assets,
+mappings, fixtures, and checks that are correct; when nothing changed and
+nothing is left to the user, the only fact to tell is that no issues were
+found.

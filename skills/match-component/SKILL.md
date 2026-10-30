@@ -1,6 +1,6 @@
 ---
-name: check-design
-description: Rigorously compare a React component against its Figma source of truth. Use when a user asks to audit, verify, compare, match, align, or pixel-check a component's visual implementation against Figma; do not use for broad code-quality review.
+name: match-component
+description: Rigorously compare a React component against its Figma source of truth and fix the differences. Use when a user asks to audit, verify, compare, match, align, or pixel-check a component's visual implementation against Figma; do not use for broad code-quality review.
 compatibility: Requires repository access and inspectable Figma design context.
 ---
 
@@ -14,7 +14,7 @@ Treat Figma as the visual source of truth. This is a strict implementation audit
    to its canonical Figma reference; the exact header labels may vary. Use the
    matching row to resolve a Figma node for the requested component.
 2. If no matching row or Figma reference exists, ask the user for the Figma
-   node rather than guessing from a component name.
+   node.
 3. Audit only the named component or bounded group. Audit a child component
    only when it contributes to the requested component's visible result.
 4. A reference table may include an implementation `Status` and other fields,
@@ -62,13 +62,10 @@ Record the actual Figma values and token bindings. A screenshot alone is insuffi
 - **Usage counts:** instance lookups may cover only the loaded page. Never
   conclude that a component is unused from an instance count; inspect the
   likely parent components instead.
-- **Legacy font variables:** accept a replacement font family only when a
-  documented, approved migration maps the legacy Figma variable to the
-  project's current font token. Record that mapping and its approval source
-  in the comparison ledger; keep size and line height from Figma. The current
-  code token alone is not evidence of approval. Without an approved mapping,
-  report the family difference as a mismatch, or record unresolved design
-  authority as a verification limit that prevents PASS.
+- **Legacy font variables:** a legacy Figma font variable can differ from the
+  project's current font token. Record an approved mapping and its approval
+  source in the comparison ledger; record an unapproved family as a mismatch,
+  or unresolved design authority as a verification limit that prevents PASS.
 
 ## Exhaustive CSS comparison
 
@@ -82,7 +79,7 @@ in every style source that affects the requested component. Include:
 
 For each source declaration, record its file and line, selector, property, literal/token expression, resolved rendered value, matching Figma property/value, and verdict. Do not skip a line because it appears cosmetic or because another declaration seems similar.
 
-Also account for Figma properties that have no matching CSS line. They are discrepancies, not omissions from the report.
+Also account for Figma properties that have no matching CSS line. They are discrepancies too.
 
 ## Rendered measurement
 
@@ -90,6 +87,10 @@ When the component can be rendered (for example in Storybook), measure the
 rendered result with a browser: box sizes, gaps between elements, positions
 relative to their container, and computed colors and fonts. Compare these
 numbers with Figma, and record them as ledger evidence.
+
+For UI that renders only inside an embedded engine, a browser preview that
+stubs the engine API serves as the browser; without one, follow the project's
+in-engine instructions.
 
 Reading CSS is not enough for layout. Padding added on top of a width
 (`content-box`), wrapper elements that a primitive inserts between a container
@@ -104,16 +105,12 @@ typography helpers, and Figma variable bindings where available.
 
 Pass a value only when one of these is true:
 
-1. The React declaration uses the canonical token that resolves to Figma's exact value.
+1. The React declaration uses a canonical token of matching value and purpose.
 2. No corresponding token exists, and the code uses Figma's exact literal in its native CSS unit. Stroke widths, colors, opacity, and shadows preserve their exact values.
 3. The declaration is supplied by the matching design-system primitive and its
    own audited API guarantees the exact Figma value.
 
-Canonical token sources define the generated representation of design tokens,
-not a mandatory representation for every un-tokenized Figma literal. Do not
-infer a required unit conversion when Figma specifies an exact literal.
-
-Do not create `calc()` expressions by combining approximate tokens to recreate a Figma value. If a token exists but resolves to another value, report a mismatch. Do not approve a hardcoded value when an exact canonical token exists.
+Do not create `calc()` expressions by combining approximate tokens to recreate a Figma value. If a token exists but resolves to another value, it is a mismatch. Do not approve a hardcoded value when a canonical token of matching value and purpose exists.
 
 ## Equivalent implementations
 
@@ -129,43 +126,36 @@ Compare state styling explicitly. Verify that:
 - a CSS selector cannot accidentally override another state's visual values;
 - asset selection, tint/filter, and intrinsic sizing match Figma exactly.
 
+## Corrections
+
+Correct every mismatch in the same pass with exact changes supported by
+Figma/token evidence, then re-run the ledger rows and measurements of the
+affected scope. A mismatch whose correction needs a missing token, a choice
+between conflicting Figma sources, or a change outside the requested component
+stays open.
+
 ## Result format
 
-Write the full report to a file, not into the reply: use the location the
-project or user names, otherwise `docs/audits/<Component>.md`.
+The record is the audit file, stored where the project or user names,
+otherwise at `docs/audits/<Component>.md`. The user must be told the result,
+the changed lines, the open mismatches and verification limits, and where the
+audit file is.
 
-Keep file paths, identifiers, token names, and Figma labels unchanged. Use this exact
-structure:
+Keep file paths, identifiers, token names, and Figma labels unchanged. The audit
+file, not the reply, uses this exact structure and omits an empty section:
 
 ```md
 ## Figma-to-React audit: <Component>
 
-**Scope:** <component, Figma node, React files>
-**Variants/states checked:** <list>
+**Scope:** <component, Figma node, variants/states, React files>
 **Result:** PASS | FAIL | BLOCKED
 
-### Line-by-line ledger
-| Style source:line | Selector / effective source | Property | React resolved value | Figma value/token | Verdict | Evidence / allowed alternative |
-|---|---|---|---|---|---|---|
-...
-
-### Missing or extra visual rules
-- <Figma property without code, or code rule without Figma counterpart>
-
-### Required corrections
-- <only exact mismatches, ordered by visual impact>
-
-### Token summary
-- <canonical tokens confirmed>
-- <missing exact tokens and exact permitted literals>
+### Open mismatches
+| Style source:line | Property | React resolved value | Figma value/token | Evidence / why it stays open |
+|---|---|---|---|---|
 
 ### Verification limits
-- <unavailable Figma state, asset, or runtime condition; omit this section if none>
+- <unavailable Figma state, asset, or runtime condition>
 ```
 
-`PASS` requires an empty **Required corrections** section and no unresolved verification limits. `BLOCKED` is required if the requested component or Figma node is unavailable, or necessary Figma/runtime evidence cannot be obtained.
-
-## Corrections
-
-For corrections, preserve the ledger, make only exact changes supported by
-Figma/token evidence, then re-run the affected scope and report the changed lines.
+`PASS` requires no open mismatches and no unresolved verification limits. `BLOCKED` is required if the requested component or Figma node is unavailable, or necessary Figma/runtime evidence cannot be obtained.

@@ -61,8 +61,7 @@ and prior regressions when they can alter observable behavior.
 Do not write tests solely for module class names, private state, component
 internals, exact CSS declarations, pixel values, or Storybook-only labels.
 Test semantic DOM output, accessible roles or labels where applicable, native
-DOM state, and callbacks instead. Do not add behavior solely to satisfy a test
-when it is absent from the component contract.
+DOM state, and callbacks instead.
 
 ## Local test stack
 
@@ -89,10 +88,9 @@ target is configured, do not create one.
 
 ## Report
 
-Include:
+The record is the test files added or updated and, when a status target is
+configured, its test-status field.
 
-- unit and integration scenarios added or updated;
-- meaningful axes and interaction flows covered;
-- commands run and their result, or what could not be run;
-- test-status update, if any;
-- remaining untestable behavior or missing public API, if any.
+Tell the user which scenarios, axes, and interaction flows the tests now cover,
+the result of the commands run or what could not be run, whether the test
+status changed, and any behavior left untestable or public API missing.

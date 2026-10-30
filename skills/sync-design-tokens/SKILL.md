@@ -9,6 +9,8 @@ Keep Figma Variables as the design authority and the checked-in `tokens/`
 folder as the canonical code input. Generated CSS, SCSS, TypeScript, or other
 platform outputs are build artifacts: never edit them by hand.
 
+When the project takes its tokens from a shared component library, do not set up a separate `tokens/` pipeline; use the library's tokens and report any missing value to the library owner.
+
 ## Modes
 
 ### Setup
@@ -113,11 +115,10 @@ Use update when `tokens/` and a token generator already exist.
 
 ## Report
 
-Include:
-
-- selected mode, Figma collections and modes, and the token input files;
-- generator command, generated output locations, and output-unit policy;
-- token additions, value changes, retained aliases, and any scoped
-  hardcoded-value replacements;
-- missing Figma access/export, ambiguous mappings, affected removals, and
-  checks that could not run.
+The record is the checked-in `tokens/` input, the generated outputs, and any
+scoped replacements in code. Tell the user the selected mode, the Figma
+collections and modes, and the token input files; the generator command, the
+generated output locations, and the output-unit policy; the token additions,
+value changes, retained aliases, and any scoped hardcoded-value replacements;
+and any missing Figma access or export, ambiguous mapping, affected removal,
+and check that could not run.

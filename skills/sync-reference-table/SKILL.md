@@ -1,6 +1,6 @@
 ---
 name: sync-reference-table
-description: Set up, update, or close rows of docs/REFERENCE_TABLE.md, which maps project components to canonical Figma references. Use when creating the component inventory, reconciling Figma, code, and table changes, or finishing an in-progress row one at a time (for example "compare the next one with Figma", "close this row", "mark it done").
+description: Set up, update, or close rows of docs/REFERENCE_TABLE.md, which maps project components to canonical Figma references. Use when creating the component inventory, reconciling Figma, code, and table changes, or finishing an in-progress row one at a time (for example "close this row", "mark it done").
 ---
 
 # Sync Reference Table
@@ -11,8 +11,10 @@ components, never a library's; recheck every story link after a story title
 changes. Choose one `Component` link
 convention for the whole table: in projects with Storybook, link only to a
 component's own story and leave components without one unlinked; in projects
-without Storybook, link to source files. `Figma` is its canonical Figma link,
-and `Status` records implementation state.
+without Storybook, or whose stories cannot be opened by URL, link to source
+files. `Figma` is its canonical Figma link,
+and `Status` records implementation state. `Status` is always the last column;
+put project-specific columns, such as `Unit Tests`, before it.
 
 ## Modes
 
@@ -28,8 +30,7 @@ the inventory.
 3. Use code to identify the matching public component. When the project has
    Storybook, link `Component` only to its own story and leave it unlinked
    when no such story exists. When the project has no Storybook, link it to the
-   source file. A name match alone is not proof; report ambiguity instead of
-   guessing.
+   source file. A name match alone is not proof; report ambiguity.
 4. Create `docs/REFERENCE_TABLE.md` when it is absent with:
 
    ```md
@@ -50,7 +51,7 @@ changed.
    supported by evidence from Figma, code, and stories.
 3. Preserve rows and project-specific columns that cannot be verified from
    Figma and code. Report ambiguous, removed, or conflicting mappings instead
-   of guessing or deleting them.
+   of deleting them.
 
 ### Close a row
 
@@ -58,10 +59,13 @@ Use close when the user wants to finish an in-progress row, usually one row at
 a time in table order.
 
 1. Ask the user to compare the row's story with its Figma reference visually.
-2. Audit the component's tokens and measurements against Figma and record
-   the differences with evidence.
+2. Confirm that a Figma parity audit of the component exists and passed;
+   otherwise run that audit first.
 3. Check that the component name and its prop and variant names match the
-   Figma component. Propose a rename when they differ.
+   Figma component, and rename the code where they differ. Propose the rename
+   instead when it is disputed, for example when Figma names the same thing
+   inconsistently or the rename changes a public API used outside the
+   project.
 
 Write a status note on its own line after the status label, for example
 `🔄 In progress<br>Needs translations`, never in parentheses. Keep a note only
@@ -77,12 +81,8 @@ is easier to find. If several credible nodes remain, report the candidates.
 
 ## Storybook link verification
 
-When a Storybook project is used, validate every new or refreshed component URL
-against its active story index (commonly `/index.json`, or the generated static
-index). Match the exact docs entry ID produced by the story title; do not guess
-an ID from a file path. If the index does not contain a newly added story after
-a discovery or configuration change, restart the dev server when appropriate and
-recheck before changing the reference table.
+When a Storybook project is used, match every new or refreshed component URL
+to the exact entry ID in the story index; never guess it from a file path.
 
 ## Boundaries
 
@@ -94,8 +94,8 @@ recheck before changing the reference table.
 
 ## Report
 
-Include only actionable results:
-
-- table created or updated, with the selected mode;
-- rows added or changed and their Figma nodes;
-- ambiguous or stale rows requiring a user decision.
+The record is `docs/REFERENCE_TABLE.md`; close mode also changes the affected
+components and stories. Tell the user only actionable results: whether the
+table was created or updated and in which mode, the rows added or changed with
+their Figma nodes, the renames made, and any ambiguous or stale row or
+disputed rename that requires a user decision.

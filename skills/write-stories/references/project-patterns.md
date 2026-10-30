@@ -66,11 +66,6 @@ its Storybook preview visible.
 
 ## Shared fixtures and providers
 
-When several stories cover one component family, keep repeated fixture data in a
-small, typed story-only module and import it from each story. Preserve meaningful
-variants by deriving them from the shared fixture rather than copying a large
-object literal.
-
 Include non-empty fixture collections when the story is intended to review a
 table or list rather than its empty state. Context-dependent stories follow
 the [entrypoint's setup rules](../SKILL.md#before-editing).

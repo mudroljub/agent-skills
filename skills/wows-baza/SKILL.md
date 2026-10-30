@@ -22,7 +22,7 @@ Baza znanja čuva ono što je već istraženo: odluke tima, strukturu koda, prov
 - **Izvorni kod je jedini izvor istine.** Dokumenti, pa i ova baza, mogu da greše. Tvrdnju koja je bitna za odluku ili implementaciju proveri u kodu i navedi `fajl:linija`. Sporove između dokumenata rešavaj čitanjem koda, ne izborom novijeg dokumenta.
 - **Odluke iz `odluke.md` važe** dok ih korisnik ne promeni. Pretpostavke su označene kao pretpostavke; nemoj ih predstavljati kao odlučeno.
 - **Ne izmišljaj odluke.** Novu odluku upiši u `odluke.md` tek kad je korisnik donese i potvrdi da je treba upisati.
-- **Bazu drži malom.** Puna ili zastarela verzija ide u `arhiva\`. Glavni fajlovi sadrže samo ono što treba za rad. Linkovi su relativni.
+- **Bazu drži malom.** Glavni fajlovi sadrže samo ono što treba za rad. Linkovi su relativni.
 - **Zaglavlje svakog fajla** ima izvore, datum stanja, commit koda i status provere. Kad menjaš fajl, ažuriraj i zaglavlje.
 - **Jezik baze je srpski, latinica.** Identifikatori, putanje i kod ostaju doslovni.
 - **Tajne nikad ne upisuj** u bazu, skil ni poruku. Pristup spoljnim sistemima opisan je u README-u baze. Tokene čitaj iz promenljivih okruženja i nikad ih ne ispisuj.

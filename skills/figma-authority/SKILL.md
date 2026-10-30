@@ -25,9 +25,9 @@ When the product Figma uses an instance of a library component, the product
 uses that component too, never a hand-made CSS imitation. Mirror Figma's
 component structure and names in code where it is logical.
 
-Never guess a visual value or variant. When Figma cannot be inspected, ask for
-the reference. When Figma has no motion data, interactive states (hover,
-pressed, selected) get a 0.2s linear transition.
+When Figma cannot be inspected, ask for the reference. When Figma has no
+motion data, interactive states (hover, pressed, selected) get a 0.2s linear
+transition.
 
 **Exception:** implement an element's values locally in the product when the
 design context establishes a deliberate custom design. A detached instance
@@ -35,6 +35,11 @@ or a hand-drawn frame alone does not establish that intent. Check the node's
 instance status, surrounding frames, design annotations, and the matching
 library component before treating a difference as a custom design or a
 library question.
+
+A replacement font family wins over a legacy Figma font variable only when a
+documented, approved migration maps that variable to the project's current
+font token; size and line height still come from Figma. The current code token
+alone is not evidence of approval.
 
 ## Clear design evidence
 

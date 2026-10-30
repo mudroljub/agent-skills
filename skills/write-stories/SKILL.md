@@ -7,6 +7,8 @@ description: Create or revise React Storybook stories, Docs, and examples using 
 
 Create clear, reviewable Storybook stories without changing a component's public API merely to reproduce a design variant.
 
+These steps assume a standard Storybook setup. When the project has no `.storybook` configuration but its own story format, for example an in-app story viewer for UI that renders only inside a game client, follow that format and skip the Storybook-specific steps.
+
 ## Before editing
 
 Read [the bundled Storybook conventions](references/conventions.md) and the
@@ -51,9 +53,13 @@ profile needs configuration.
   presented without user interaction. Preserve its structure and order,
   including icon or variant rows, state tables, headings, labels, text, and
   image assets.
-- Assets used solely to compose one of those examples are story fixtures:
-  import and map them in the story, not in the production component or its
-  public API.
+- Give sample data the design's real dimensions, such as a text row's line
+  height or an image's size: a sample a few pixels off shifts every
+  composition built from it, and page checks then report false differences.
+  For example, a placeholder name row 32 px tall instead of the designed
+  24 px moves a whole dialog 8 px.
+- Put a sample element that other components' stories reuse in a fixture
+  beside the stories of the component that owns it.
 - Arrange the primary variant axis in column headers and states in rows when
   that makes comparison clearer.
 - Give every column of a comparison grid the same width, sized to its widest

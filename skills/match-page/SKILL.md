@@ -1,7 +1,7 @@
 ---
-name: check-page
+name: match-page
 description: Compare whole app pages with their Figma screen designs and fix the differences, one page at a time. Use when the user asks to review, compare, or align app pages, screens, or layouts with Figma, to map which pages have a design, or to continue a page review plan.
-compatibility: Requires repository access, inspectable Figma design context, and a browser tool (for example Playwright MCP) that can open the running app.
+compatibility: Requires repository access, inspectable Figma design context, and a browser tool (for example Playwright MCP) that can open the running app. For an app that renders only inside an embedded engine, a browser preview that stubs the engine API serves as the running app; without one, the project's in-engine instructions replace the browser tool.
 ---
 
 # Page Review Against Figma
@@ -25,7 +25,8 @@ page puts them together and fixes what Figma clearly specifies.
 5. Order the plan by the user's priority.
 
 Keep the plan where the project keeps internal working documents, and add one
-`Status` column and a "Lessons" section for observations about the review process.
+`Status` column and a "Lessons" section for observations about the review
+process.
 
 ## 2. Read Figma economically
 
@@ -47,8 +48,6 @@ Large screens are expensive to inspect; spend tokens on the nodes you compare.
 
 ## 3. Look at the real page
 
-Compare against the running app, not against a mental model of the code.
-
 1. Open the page in a browser tool at the Figma frame size. Use the project's
    local sign-in flow and an account whose data shows the designed state.
    Check that the route shows the designed variant (an
@@ -56,10 +55,19 @@ Compare against the running app, not against a mental model of the code.
 2. Prefer a small scripted browser runner over interactive tool calls when the
    tool returns a page snapshot after every action: one script per state that
    signs in, reaches the state, and prints bounding boxes and computed styles
-   for the blocks in question, plus clipped screenshots.
-3. Reach states the local data cannot show with temporary hacks: flip a
-   feature flag, skip a loading state, relax a route guard, or hardcode the
-   Figma values straight into the markup. Keep a list of hacked files, never
+   for the blocks in question, plus clipped screenshots. For a page that
+   needs no sign-in, [the measuring script](scripts/measure-page.mjs) opens a
+   URL in headless Chrome at an exact viewport, saves a screenshot, and prints
+   the value of a JavaScript expression; measure bounding boxes through that
+   expression instead of judging the screenshot by eye. It waits in real time
+   because Chrome's `--virtual-time-budget` does not run
+   `requestAnimationFrame`, so layout computed in a frame callback never
+   appears. The first load after a dev server starts can outlast the wait
+   while dependencies are optimised, so a blank first capture means wait
+   longer and retry, not a broken page.
+3. A state the local data cannot show can be reached with a temporary hack:
+   flip a feature flag, skip a loading state, relax a route guard, or hardcode
+   the Figma values straight into the markup. Keep a list of hacked files, never
    trigger real actions (save, leave, buy), and revert every hack right after the check;
    when real fixes land in the same file, revert the hack with a targeted edit
    instead of restoring a backup.
@@ -84,10 +92,9 @@ Compare against the running app, not against a mental model of the code.
 5. Before changing a shared component or stylesheet, list its other consumers
    and re-check them in the browser; keep a page-specific fix scoped (for
    example by a state class) when another consumer depends on the old layout.
-6. Fix a rendering or behavior bug where it originates. If a library component
-   breaks the layout, trace the CSS rule to its source, fix it in the library
-   with a test and a changelog entry, and verify the effect in the browser
-   before the user publishes a new version.
+6. If a library component breaks the layout, trace the CSS rule to its
+   source, fix it in the library with a test and a changelog entry, and verify
+   the effect in the browser before the user publishes a new version.
 7. Check animated changes (a panel sliding in, a menu opening) frame by frame
    against the element they move with, not only the start and end positions;
    an element that travels outside its panel during the animation looks
@@ -111,5 +118,6 @@ Compare against the running app, not against a mental model of the code.
 
 ## Report
 
-Name the pages covered, what changed, what was
-verified in the browser, and any verification limits.
+The record is the plan (differences, evidence, status, and lessons per page)
+and the component inventory. The user must be told the pages covered, what
+changed, what was verified in the browser, and any verification limits.

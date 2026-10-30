@@ -3,12 +3,20 @@
   "notGrouped": "bottom",
   "groupings": [
     {
+      "title": "Head",
+      "description": "Always loaded: how the agent thinks, plans, designs, acts, and resolves tensions.",
+      "skills": [
+        "perfect-developer"
+      ]
+    },
+    {
       "title": "Design systems",
       "description": "Figma parity, assets, design tokens, and component references.",
       "skills": [
         "figma-authority",
-        "check-assets",
-        "check-design",
+        "match-assets",
+        "match-component",
+        "match-page",
         "sync-design-tokens",
         "sync-reference-table"
       ]
@@ -19,15 +27,39 @@
       "skills": [
         "write-stories",
         "write-tests",
+        "write-components",
         "uikit-final-review"
       ]
     },
     {
-      "title": "Agent behavior",
-      "description": "Interpret user intent and engineer with a consistent character.",
+      "title": "Planning",
+      "description": "Implementation plans that AI agents carry out.",
+      "skills": [
+        "write-plan"
+      ]
+    },
+    {
+      "title": "Embedded UI",
+      "description": "Web UI that runs inside an embedded HTML engine, such as a game client.",
+      "skills": [
+        "preview-embedded-ui",
+        "gameface"
+      ]
+    },
+    {
+      "title": "Communication",
+      "description": "When to act or ask, the form of a reply, and the pace across turns.",
       "skills": [
         "pracenje-instrukcija",
-        "perfect-developer"
+        "skrati",
+        "jedno-po-jedno"
+      ]
+    },
+    {
+      "title": "Project",
+      "description": "Skills for one project; they need that project's local knowledge base.",
+      "skills": [
+        "wows-baza"
       ]
     }
   ]

@@ -1,6 +1,6 @@
 ---
 name: jedno-po-jedno
-description: "Vodi razgovor i rešavanje problema jedno po jedno: postavi jedno pitanje, sačekaj odgovor, pa nastavi. Običan razgovor ne zapisuj. Trajan spisak koristi samo za nerešene nalaze iz izveštaja ili niz problema koje ne možemo brzo i lako rešiti."
+description: "Vodi razgovor i rešavanje problema jedno po jedno: sačekaj odgovor pre sledećeg pitanja. Običan razgovor ne zapisuj. Trajan spisak koristi samo za nerešene nalaze iz izveštaja ili niz problema koje ne možemo brzo i lako rešiti. Koristi kad ima više otvorenih pitanja ili nalaza za rešavanje redom."
 ---
 
 # Jedno po jedno
@@ -9,11 +9,10 @@ Korisnik lakše prati jednu stvar u trenutku. To prvenstveno određuje tok razgo
 
 ## Razgovor je podrazumevan
 
-- Postavi jedno pitanje i sačekaj odgovor, pa postavi sledeće.
+- Sačekaj odgovor pre sledećeg pitanja.
 - Više uzastopnih pitanja, odgovora, predloga ili kratkih odluka nije razlog za upisivanje u TODO.
 - Stvari koje možemo brzo i lako razjasniti ili rešiti obradi u razgovoru, jednu po jednu.
-- Kada rešenje ima nesporan i sporan deo, prvo uradi nesporan deo, pa pitaj samo za sporan. Sporan je deo koji ima stvarnu manu ili menja nešto van dogovorenog obima, na primer zajedničku biblioteku.
-- Ne dokumentuj odgovore i ne pravi MD fajlove radi čuvanja razgovora. Dokumentaciju menjaj kada je korisnik to zatražio, ne zato što je ovaj skil aktivan.
+- Ne dokumentuj odgovore i ne pravi MD fajlove radi čuvanja razgovora.
 
 ## Kada se stavke upisuju
 

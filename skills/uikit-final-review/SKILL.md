@@ -1,11 +1,12 @@
 ---
 name: uikit-final-review
-description: Run the final review for changed UIKit components. Use when the user asks for a final review, readiness check, or pre-approval verification; apply its checklist, verify relevant checks, and update actual Unit Tests state. Component refactoring and migration status updates are out of scope.
+description: Run the pre-approval checklist for a changed UI-library component. Use when the user asks for that component's final review or readiness check; apply its checklist, fix failed checks, and verify relevant checks. Not for plans, pages, PRs, or Figma parity; component refactoring and migration status updates are out of scope.
 ---
 
 # UIKit Final Review
 
-Produce final implementation evidence for changed UIKit components.
+Bring changed UIKit components to approval readiness and produce the final
+evidence.
 
 ## Scope
 
@@ -13,17 +14,19 @@ Produce final implementation evidence for changed UIKit components.
    component that affects its visible result.
 2. Read the [final review checklist](references/checklist.md), the matching `docs/REFERENCE_TABLE.md` row,
    relevant source, styles, tests, and stories.
-3. Apply every checklist item. Treat a mismatch as a required
-   correction; do not waive an item because the default example looks right.
+3. Apply every checklist item and fix each failed item whose correction the
+   sources settle; do not waive an item because the default example looks
+   right.
 
 ## Verification
 
 Run each relevant project check that the environment permits — lint, type
 check, tests, and build — using the commands defined in the project's package
-manifest.
+manifest. Fix each failure whose cause and correction are clear, then run that
+check again.
 
-Do not run Playwright visual regression tests during active
-migration; visual snapshots are batch work after migration.
+Do not run Playwright visual regression tests while components
+are still changing; visual snapshots are batch work once they settle.
 
 A Figma visual-parity audit is out of scope. This skill
 records whether that evidence is available but does not duplicate its
@@ -31,37 +34,20 @@ line-by-line ledger.
 
 ## Reference table boundary
 
-- When the table has a `Unit Tests` column, update only the matching cell, and
-  only when actual test evidence changes its truthfulness.
+- When the table has a `Unit Tests` column, verify that the matching cell agrees
+  with the test evidence, like any other checklist item.
 - The table's `Status` cell is outside this review's scope.
 - Do not alter Figma links, source mappings, or unrelated rows.
 
 ## Report
 
-Keep commands, paths, and status values unchanged.
-Use this compact structure:
+The record is the corrected component files and, when it was wrong, the
+corrected `Unit Tests` cell in `docs/REFERENCE_TABLE.md`.
 
-```md
-## UIKit final review: <Component>
-
-**Result:** READY | CORRECTIONS REQUIRED | VERIFICATION LIMITED
-
-### Checks
-- <checklist item>: pass | fail | not verified — <evidence>
-
-### Commands
-- `<command>`: pass | fail | not run — <reason or relevant result>
-
-### Table
-- `Unit Tests`: updated | already accurate | not applicable
-- `Status`: unchanged
-
-### Required corrections
-- <only unresolved items; omit this section when empty>
-
-### Verification limits
-- <only skipped or unavailable evidence; omit this section when empty>
-```
+Tell the user the result (`READY`, `DECISION REQUIRED`, or
+`VERIFICATION LIMITED`), whether the `Unit Tests` cell changed, the corrections
+made, every failed check or command left for a decision with its evidence, and
+every check or command that could not be verified or run, with the reason.
 
 `READY` means every applicable checklist item passed and no verification limit
 remains.

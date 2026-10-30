@@ -38,7 +38,7 @@ Svaki par prikazuje odgovor posle kog korisnik nije razumeo, a zatim popravljen 
 
 Loše (korisnik: „ne razumem pitanje. opet previše informacija odjednom. pitaj jedno i jasno“):
 
-> Audit je gotov. Posle zamene komponenti razlike su mnogo manje: stanja kartice, razmaci, tipografija, senke i dugmad su tačno kao u Figmi. Razlike: 1. Linija iznad panela za potvrdu: stara biblioteka ima jednu belu liniju od 1px (7%), a u Figmi je linija od 2px, tamna sa svetlom senkom… 2. Zamućenje pozadine… 3. „Expansions: 0 out of 5“… Predlog: tačku 1 dodam u plan, a 2 i 3 ostavim. Slažeš li se?
+> Audit je gotov. Posle zamene komponenti razlike su mnogo manje: stanja kartice, razmaci, tipografija, senke i dugmad su tačno kao u Figmi. Razlike: 1. Linija iznad panela za potvrdu: stara biblioteka ima jednu belu liniju od 1px (7%), a u Figmi je linija od 2px, tamna sa svetlom senkom… 2. Zamućenje pozadine… 3. Brojač „0 od 5“… Predlog: tačku 1 dodam u plan, a 2 i 3 ostavim. Slažeš li se?
 
 Dobro:
 
@@ -48,7 +48,7 @@ Dobro:
 
 Loše (korisnik: „ne razumem tvoj odgovor. da li komponenta ikada dobija drugu ikonicu?“):
 
-> Dobija ikonicu dostignuća sa servisa za rečnik igre: backend traži sva dostignuća (`achievements.py:36-47`) i šalje ih u `settings.achievements.data`, odakle dolazi i `mediaPath`; frontend spaja `mediaPath + achievements.data[ID].icons.normal`. Kada je podešavanje isključeno, `src` postaje `mediaPath + 'unknown'`…
+> Dobija ikonicu iz kataloga sa servera: backend učitava ceo katalog (`catalog.py:36-47`) i šalje ga u `settings.catalog.data`, odakle dolazi i `mediaPath`; frontend spaja `mediaPath + catalog.data[ID].icon`. Kada je podešavanje isključeno, `src` postaje `mediaPath + 'unknown'`…
 
 Dobro:
 
